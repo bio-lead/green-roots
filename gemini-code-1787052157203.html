@@ -1,0 +1,678 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BioLead — Milliy Ekologik Yetakchilik Platformasi</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- FontAwesome Icons -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        brand: {
+                            50: '#f0fdf4',
+                            100: '#dcfce7',
+                            500: '#22c55e',
+                            600: '#16a34a',
+                            700: '#15803d',
+                            800: '#166534',
+                            900: '#14532d',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="bg-slate-50 text-slate-800 font-sans min-h-screen flex flex-col antialiased">
+
+    <!-- NAVIGATSIYA -->
+    <header class="bg-brand-900 text-white shadow-lg sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                <div class="flex items-center space-x-3 cursor-pointer" onclick="showPage('home')">
+                    <div class="bg-brand-500 p-2 rounded-xl text-white shadow">
+                        <i class="fa-solid fa-leaf text-xl"></i>
+                    </div>
+                    <span class="text-2xl font-black tracking-tight bg-gradient-to-r from-white to-brand-100 bg-clip-text text-transparent">BioLead</span>
+                </div>
+
+                <nav class="hidden md:flex space-x-1 lg:space-x-4 text-sm font-medium">
+                    <button onclick="showPage('home')" class="nav-btn px-3 py-2 rounded-lg hover:bg-brand-800 transition" data-target="home">Bosh sahifa</button>
+                    <button onclick="showPage('ambassadors')" class="nav-btn px-3 py-2 rounded-lg hover:bg-brand-800 transition" data-target="ambassadors">Elchilar</button>
+                    <button onclick="showPage('events')" class="nav-btn px-3 py-2 rounded-lg hover:bg-brand-800 transition" data-target="events">Tadbirlar</button>
+                    <button onclick="showPage('climate')" class="nav-btn px-3 py-2 rounded-lg hover:bg-brand-800 transition" data-target="climate">Statistika & Hisob-kitob</button>
+                    <button onclick="showPage('research')" class="nav-btn px-3 py-2 rounded-lg hover:bg-brand-800 transition" data-target="research">Tadqiqotlar</button>
+                </nav>
+
+                <div class="flex items-center space-x-3">
+                    <div id="authNavGuest" class="flex space-x-2">
+                        <button onclick="openModal('loginModal')" class="text-xs sm:text-sm font-semibold px-4 py-2 rounded-lg bg-white/10 hover:bg-white/20 transition">Kirish</button>
+                        <button onclick="openModal('registerModal')" class="text-xs sm:text-sm font-semibold px-4 py-2 rounded-lg bg-brand-500 hover:bg-brand-600 transition shadow">Ro'yxatdan o'tish</button>
+                    </div>
+                    <div id="authNavUser" class="hidden flex items-center space-x-3">
+                        <button onclick="showPage('dashboard')" class="flex items-center space-x-2 bg-brand-800 px-3 py-1.5 rounded-lg border border-brand-700 hover:bg-brand-700 transition">
+                            <i class="fa-solid fa-user-shield text-brand-300"></i>
+                            <span id="navUserName" class="text-sm font-medium">Profil</span>
+                        </button>
+                        <button onclick="logout()" class="text-xs text-red-300 hover:text-red-100"><i class="fa-solid fa-arrow-right-from-bracket"></i></button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- ASOSIY KONTENT MAYDONI -->
+    <main class="flex-grow max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 w-full">
+
+        <!-- 1. BOSH SAHIFA (HOME) -->
+        <section id="page-home" class="page-section space-y-12">
+            <!-- Hero banner -->
+            <div class="bg-gradient-to-br from-brand-900 via-brand-800 to-slate-900 rounded-3xl p-8 sm:p-14 text-white shadow-2xl relative overflow-hidden">
+                <div class="relative z-10 max-w-3xl space-y-6">
+                    <span class="px-3.5 py-1.5 rounded-full bg-brand-500/20 border border-brand-400/30 text-brand-300 text-xs font-bold uppercase tracking-wider">Milliy Yoshlar Tashabbusi</span>
+                    <h1 class="text-4xl sm:text-5xl font-extrabold tracking-tight leading-tight">Yashil Kelajakni Qurishda Texnologik Yetakchilik</h1>
+                    <p class="text-slate-300 text-base sm:text-lg leading-relaxed">
+                        BioLead — yoshlarning ilmiy salohiyatini oshirish, ekologik ma'lumotlarni tahlil qilish, resurslarni tejash va respublika bo'ylab faol elchilar hamjamiyatini birlashtirish platformasi.
+                    </p>
+                    <div class="flex flex-wrap gap-4 pt-4">
+                        <button onclick="showPage('climate')" class="px-6 py-3 bg-brand-500 hover:bg-brand-600 text-white font-bold rounded-xl shadow-lg transition flex items-center space-x-2">
+                            <span>Resurslarni Hisoblash</span>
+                            <i class="fa-solid fa-calculator"></i>
+                        </button>
+                        <button onclick="showPage('research')" class="px-6 py-3 bg-white/10 hover:bg-white/20 text-white font-bold rounded-xl border border-white/20 transition flex items-center space-x-2">
+                            <span>Ilmiy Maqolalar</span>
+                            <i class="fa-solid fa-book-open"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Maqsadimiz -->
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <div class="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm space-y-3">
+                    <div class="w-12 h-12 rounded-xl bg-emerald-100 text-brand-700 flex items-center justify-center text-xl"><i class="fa-solid fa-bullseye"></i></div>
+                    <h3 class="text-lg font-bold text-slate-900">Bosh Maqsad</h3>
+                    <p class="text-sm text-slate-600 leading-relaxed">Yoshlarni ekologik tahliliy fikrlashga, ilmiy tadqiqotlar o'tkazishga va resurslardan ongli foydalanishga o'rgatish.</p>
+                </div>
+                <div class="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm space-y-3">
+                    <div class="w-12 h-12 rounded-xl bg-blue-100 text-blue-700 flex items-center justify-center text-xl"><i class="fa-solid fa-network-wired"></i></div>
+                    <h3 class="text-lg font-bold text-slate-900">Elchilar Tarmog'i</h3>
+                    <p class="text-sm text-slate-600 leading-relaxed">O'zbekistonning barcha viloyatlarida yoshlar yetakchilari (Ambassador) tizimini barpo etish va mintaqaviy aksiyalarni muvofiqlashtirish.</p>
+                </div>
+                <div class="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm space-y-3">
+                    <div class="w-12 h-12 rounded-xl bg-amber-100 text-amber-700 flex items-center justify-center text-xl"><i class="fa-solid fa-award"></i></div>
+                    <h3 class="text-lg font-bold text-slate-900">Rag'batlantirish</h3>
+                    <p class="text-sm text-slate-600 leading-relaxed">Eng yaxshi tadqiqotchi, eng faol debatchi va resurslarni tejashda yetakchi ishtirokchilarni doimiy mukofotlab borish.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- 2. AMBASSADORLAR (ELCHILAR) JADVALI -->
+        <section id="page-ambassadors" class="page-section hidden space-y-6">
+            <div>
+                <h2 class="text-2xl font-black text-slate-900">Hududiy Elchilar Tarmog'i</h2>
+                <p class="text-sm text-slate-500">Viloyatlar bo'yicha BioLead vakillari bilan bog'laning yoki mahalliy tadbirlarga qo'shiling</p>
+            </div>
+
+            <div class="bg-white rounded-2xl border border-slate-200 shadow-sm overflow-hidden">
+                <div class="overflow-x-auto">
+                    <table class="w-full text-left text-sm">
+                        <thead class="bg-slate-50 border-b border-slate-200 text-slate-600 uppercase text-xs">
+                            <tr>
+                                <th class="py-3.5 px-4 font-bold">Viloyat / Hudud</th>
+                                <th class="py-3.5 px-4 font-bold">Elchi (Ambassador)</th>
+                                <th class="py-3.5 px-4 font-bold">Ta'lim Maskani / Mutaxassislik</th>
+                                <th class="py-3.5 px-4 font-bold">Aloqa (Telegram/Email)</th>
+                                <th class="py-3.5 px-4 font-bold text-right">Faol Loyihalar</th>
+                            </tr>
+                        </thead>
+                        <tbody id="ambassadorTableBody" class="divide-y divide-slate-100">
+                            <!-- JS orqali to'ldiriladi -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+
+        <!-- 3. TADBIRLAR VA EVENTLAR -->
+        <section id="page-events" class="page-section hidden space-y-6">
+            <div>
+                <h2 class="text-2xl font-black text-slate-900">Rejalashtirilgan Tadbirlar va Debatlar</h2>
+                <p class="text-sm text-slate-500">Viloyatlarda o'tkaziladigan ekologik seminarlar, intellektual bahslar va ilmiy konferensiyalar</p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6" id="eventsGrid">
+                <!-- JS orqali to'ldiriladi -->
+            </div>
+        </section>
+
+        <!-- 4. IQLIM VA STATISTIKA / KALKULYATOR -->
+        <section id="page-climate" class="page-section hidden space-y-8">
+            <div>
+                <h2 class="text-2xl font-black text-slate-900">O'zbekiston Ekologik Resurslari & Shaxsiy Hisoblagich</h2>
+                <p class="text-sm text-slate-500">Mamlakat statistikasi va o'z hissangizni aniq raqamlarda ko'ring</p>
+            </div>
+
+            <!-- Respublika o'rtacha statistikasi -->
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+                <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm">
+                    <span class="text-xs text-slate-400 uppercase font-bold">Yillik Suv Iste'moli</span>
+                    <h4 class="text-2xl font-black text-blue-600 mt-1">~50 mlrd m³</h4>
+                    <p class="text-xs text-slate-500 mt-1">Kishi boshiga: <b>~1,400 m³/yil</b></p>
+                </div>
+                <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm">
+                    <span class="text-xs text-slate-400 uppercase font-bold">Elektr Ishlab Chiqarish</span>
+                    <h4 class="text-2xl font-black text-amber-500 mt-1">~75 mlrd kVt·soat</h4>
+                    <p class="text-xs text-slate-500 mt-1">Kishi boshiga: <b>~2,100 kVt·soat/yil</b></p>
+                </div>
+                <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm">
+                    <span class="text-xs text-slate-400 uppercase font-bold">CO₂ Emissiyasi</span>
+                    <h4 class="text-2xl font-black text-rose-500 mt-1">~115 mln tonna</h4>
+                    <p class="text-xs text-slate-500 mt-1">Kishi boshiga: <b>~3.2 tonna/yil</b></p>
+                </div>
+                <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm">
+                    <span class="text-xs text-slate-400 uppercase font-bold">Qattiq Maishiy Chiqindi</span>
+                    <h4 class="text-2xl font-black text-emerald-600 mt-1">~14 mln tonna</h4>
+                    <p class="text-xs text-slate-500 mt-1">Kishi boshiga: <b>~380 kg/yil</b></p>
+                </div>
+            </div>
+
+            <!-- Shaxsiy tejash kalkulyatori -->
+            <div class="bg-white p-6 sm:p-8 rounded-3xl border border-slate-200 shadow-sm grid grid-cols-1 lg:grid-cols-2 gap-8">
+                <div class="space-y-4">
+                    <h3 class="text-lg font-bold text-slate-900 flex items-center space-x-2">
+                        <i class="fa-solid fa-sliders text-brand-600"></i>
+                        <span>Shaxsiy Tejash Hisoblagichi</span>
+                    </h3>
+                    <p class="text-xs text-slate-500">Bugun tejagan yoki qayta ishlagan miqdoringizni kiriting va ballaringizni oshiring.</p>
+
+                    <div class="space-y-3">
+                        <div>
+                            <label class="text-xs font-semibold text-slate-700">Tejalgan Suv (litrda)</label>
+                            <input type="number" id="calcWater" class="w-full mt-1 px-3.5 py-2 rounded-lg border border-slate-200 text-sm focus:ring-2 focus:ring-brand-500 focus:outline-none" placeholder="Masalan: 50" value="0">
+                        </div>
+                        <div>
+                            <label class="text-xs font-semibold text-slate-700">Tejalgan Elektr (kVt·soat)</label>
+                            <input type="number" id="calcEnergy" class="w-full mt-1 px-3.5 py-2 rounded-lg border border-slate-200 text-sm focus:ring-2 focus:ring-brand-500 focus:outline-none" placeholder="Masalan: 3" value="0">
+                        </div>
+                        <div>
+                            <label class="text-xs font-semibold text-slate-700">Saralangan Qog'oz / Plastik (kg)</label>
+                            <input type="number" id="calcWaste" class="w-full mt-1 px-3.5 py-2 rounded-lg border border-slate-200 text-sm focus:ring-2 focus:ring-brand-500 focus:outline-none" placeholder="Masalan: 2" value="0">
+                        </div>
+                        <button onclick="calculateAndSaveImpact()" class="w-full py-2.5 bg-brand-600 hover:bg-brand-700 text-white font-bold rounded-xl shadow transition">Hisoblash & Profilga Qo'shish</button>
+                    </div>
+                </div>
+
+                <div class="bg-slate-50 p-6 rounded-2xl border border-slate-200 flex flex-col justify-center text-center space-y-4">
+                    <span class="text-xs font-bold text-slate-400 uppercase tracking-wider">Hisoblangan Natija</span>
+                    <div class="space-y-2">
+                        <div class="text-4xl font-black text-brand-600" id="calcResultPoints">0 Ball</div>
+                        <p class="text-xs text-slate-500">Kamaytirilgan $CO_2$ miqdori: <b id="calcResultCO2" class="text-slate-800">0.0 kg</b></p>
+                    </div>
+                    <p class="text-xs text-slate-500 leading-relaxed">
+                        Har bir tejalgan 10 litr suv = <b>2 ball</b> | 1 kVt elektr = <b>5 ball</b> | 1 kg saralangan chiqindi = <b>10 ball</b> beradi.
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <!-- 5. TADQIQOTLAR VA MAQOLALAR PORTALI -->
+        <section id="page-research" class="page-section hidden space-y-6">
+            <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
+                <div>
+                    <h2 class="text-2xl font-black text-slate-900">Yoshlar Ilmiy Tadqiqotlari</h2>
+                    <p class="text-sm text-slate-500">Ekologiya, ma'lumotlar tahlili va yashil texnologiyalar bo'yicha ishtirokchilar maqolalari</p>
+                </div>
+                <button onclick="openArticleModal()" class="px-4 py-2.5 bg-brand-600 hover:bg-brand-700 text-white font-bold rounded-xl text-sm shadow transition flex items-center space-x-2">
+                    <i class="fa-solid fa-cloud-arrow-up"></i>
+                    <span>Tadqiqot Yuklash</span>
+                </button>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6" id="researchList">
+                <!-- JS orqali to'ldiriladi -->
+            </div>
+        </section>
+
+        <!-- 6. SHAXSIY KABINET VA BOSHQARUV PANELI (DASHBOARD) -->
+        <section id="page-dashboard" class="page-section hidden space-y-8">
+            <div class="bg-white p-6 rounded-3xl border border-slate-200 shadow-sm flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
+                <div class="flex items-center space-x-4">
+                    <div class="w-16 h-16 rounded-2xl bg-brand-100 text-brand-700 flex items-center justify-center text-3xl font-black" id="dashAvatar">U</div>
+                    <div>
+                        <div class="flex items-center space-x-2">
+                            <h2 class="text-xl font-bold text-slate-900" id="dashName">Foydalanuvchi</h2>
+                            <span id="dashRoleBadge" class="text-xs px-2.5 py-0.5 rounded-full font-bold bg-slate-100 text-slate-700 uppercase">Ishtirokchi</span>
+                        </div>
+                        <p class="text-xs text-slate-500 mt-0.5" id="dashEmail">email@example.com</p>
+                    </div>
+                </div>
+                <div class="text-left md:text-right bg-brand-50 p-4 rounded-2xl border border-brand-100">
+                    <span class="text-xs text-slate-500 font-bold uppercase">To'plangan Ballar</span>
+                    <div class="text-3xl font-black text-brand-700" id="dashPoints">0</div>
+                </div>
+            </div>
+
+            <!-- ADMIN PANELI (Faqat Admin uchun ko'rinadi) -->
+            <div id="adminPanelBlock" class="hidden space-y-6">
+                <div class="flex items-center space-x-3">
+                    <span class="p-2 bg-purple-100 text-purple-700 rounded-lg"><i class="fa-solid fa-screwdriver-wrench"></i></span>
+                    <h3 class="text-lg font-bold text-slate-900">Admin Boshqaruv Markazi (Loyiha Egasi)</h3>
+                </div>
+
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                    <!-- Yangi Elchi Qo'shish -->
+                    <div class="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm space-y-4">
+                        <h4 class="font-bold text-slate-800 text-sm flex items-center space-x-2">
+                            <i class="fa-solid fa-user-plus text-brand-600"></i>
+                            <span>Yangi Elchi (Ambassador) Qo'shish</span>
+                        </h4>
+                        <form id="addAmbassadorForm" class="space-y-3">
+                            <input type="text" id="ambName" placeholder="Elchi Ismi va Familiyasi" required class="w-full px-3.5 py-2 text-sm rounded-lg border border-slate-200">
+                            <input type="text" id="ambRegion" placeholder="Viloyat / Shahar (masalan: Buxoro)" required class="w-full px-3.5 py-2 text-sm rounded-lg border border-slate-200">
+                            <input type="text" id="ambSchool" placeholder="Ta'lim maskani yoki faoliyati" required class="w-full px-3.5 py-2 text-sm rounded-lg border border-slate-200">
+                            <input type="text" id="ambContact" placeholder="Telegram username yoki tel" required class="w-full px-3.5 py-2 text-sm rounded-lg border border-slate-200">
+                            <button type="submit" class="w-full py-2 bg-brand-600 hover:bg-brand-700 text-white font-bold text-sm rounded-lg">Elchini Saqlash</button>
+                        </form>
+                    </div>
+
+                    <!-- Yangi Event Qo'shish -->
+                    <div class="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm space-y-4">
+                        <h4 class="font-bold text-slate-800 text-sm flex items-center space-x-2">
+                            <i class="fa-solid fa-calendar-plus text-blue-600"></i>
+                            <span>Yangi Tadbir / Debat Qo'shish</span>
+                        </h4>
+                        <form id="addEventForm" class="space-y-3">
+                            <input type="text" id="evTitle" placeholder="Tadbir Nomi (masalan: Eco-Debate 2026)" required class="w-full px-3.5 py-2 text-sm rounded-lg border border-slate-200">
+                            <input type="text" id="evRegion" placeholder="O'tkaziladigan Viloyat" required class="w-full px-3.5 py-2 text-sm rounded-lg border border-slate-200">
+                            <input type="date" id="evDate" required class="w-full px-3.5 py-2 text-sm rounded-lg border border-slate-200">
+                            <textarea id="evDesc" placeholder="Tadbir haqida qisqacha ma'lumot" required class="w-full px-3.5 py-2 text-sm rounded-lg border border-slate-200" rows="2"></textarea>
+                            <button type="submit" class="w-full py-2 bg-blue-600 hover:bg-blue-700 text-white font-bold text-sm rounded-lg">Tadbirni E'lon Qilish</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Foydalanuvchining Shaxsiy Maqolalari/Faolligi -->
+            <div class="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm space-y-4">
+                <h4 class="font-bold text-slate-800 text-sm">Mening Nashrlarim va Yuborgan Tadqiqotlarim</h4>
+                <div id="userResearchList" class="text-xs text-slate-500">Hozircha yuklangan tadqiqotlar yo'q.</div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- FOOTER -->
+    <footer class="bg-slate-900 text-slate-400 py-8 border-t border-slate-800 text-center text-xs">
+        <div class="max-w-7xl mx-auto px-4 space-y-2">
+            <p class="font-bold text-slate-300">BioLead — Yoshlar Ekologik va Ilmiy Tashabbusi</p>
+            <p>© 2026 Barcha huquqlar himoyalangan. O'zbekiston bo'ylab yashil kelajak sari.</p>
+        </div>
+    </footer>
+
+    <!-- MODAL: KIRISH (LOGIN) -->
+    <div id="loginModal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
+        <div class="bg-white rounded-3xl p-6 sm:p-8 max-w-sm w-full shadow-2xl space-y-4">
+            <div class="flex justify-between items-center">
+                <h3 class="text-lg font-black text-slate-900">Tizimga Kirish</h3>
+                <button onclick="closeModal('loginModal')" class="text-slate-400 hover:text-slate-600"><i class="fa-solid fa-xmark text-lg"></i></button>
+            </div>
+            <form id="loginForm" class="space-y-3">
+                <div>
+                    <label class="text-xs font-semibold text-slate-700">Email yoki Username</label>
+                    <input type="text" id="loginUser" required class="w-full mt-1 px-3.5 py-2 rounded-lg border border-slate-200 text-sm">
+                </div>
+                <div>
+                    <label class="text-xs font-semibold text-slate-700">Parol</label>
+                    <input type="password" id="loginPass" required class="w-full mt-1 px-3.5 py-2 rounded-lg border border-slate-200 text-sm">
+                </div>
+                <p class="text-[11px] text-slate-400">Admin kirishi uchun: <b>admin</b> / <b>admin123</b></p>
+                <button type="submit" class="w-full py-2.5 bg-brand-600 hover:bg-brand-700 text-white font-bold rounded-xl text-sm">Kirish</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- MODAL: RO'YXATDAN O'TISH (REGISTER) -->
+    <div id="registerModal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
+        <div class="bg-white rounded-3xl p-6 sm:p-8 max-w-sm w-full shadow-2xl space-y-4">
+            <div class="flex justify-between items-center">
+                <h3 class="text-lg font-black text-slate-900">Ro'yxatdan O'tish</h3>
+                <button onclick="closeModal('registerModal')" class="text-slate-400 hover:text-slate-600"><i class="fa-solid fa-xmark text-lg"></i></button>
+            </div>
+            <form id="registerForm" class="space-y-3">
+                <div>
+                    <label class="text-xs font-semibold text-slate-700">To'liq Ismingiz</label>
+                    <input type="text" id="regName" required class="w-full mt-1 px-3.5 py-2 rounded-lg border border-slate-200 text-sm">
+                </div>
+                <div>
+                    <label class="text-xs font-semibold text-slate-700">Email</label>
+                    <input type="email" id="regEmail" required class="w-full mt-1 px-3.5 py-2 rounded-lg border border-slate-200 text-sm">
+                </div>
+                <div>
+                    <label class="text-xs font-semibold text-slate-700">Viloyat</label>
+                    <input type="text" id="regRegion" placeholder="Masalan: Buxoro" required class="w-full mt-1 px-3.5 py-2 rounded-lg border border-slate-200 text-sm">
+                </div>
+                <div>
+                    <label class="text-xs font-semibold text-slate-700">Parol</label>
+                    <input type="password" id="regPass" required class="w-full mt-1 px-3.5 py-2 rounded-lg border border-slate-200 text-sm">
+                </div>
+                <button type="submit" class="w-full py-2.5 bg-brand-600 hover:bg-brand-700 text-white font-bold rounded-xl text-sm">Akkaunt Yaratish</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- MODAL: TADQIQOT / MAQOLA YUKLASH -->
+    <div id="articleModal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
+        <div class="bg-white rounded-3xl p-6 sm:p-8 max-w-lg w-full shadow-2xl space-y-4">
+            <div class="flex justify-between items-center">
+                <h3 class="text-lg font-black text-slate-900">Ilmiy Tadqiqot Yuklash</h3>
+                <button onclick="closeModal('articleModal')" class="text-slate-400 hover:text-slate-600"><i class="fa-solid fa-xmark text-lg"></i></button>
+            </div>
+            <form id="articleForm" class="space-y-3">
+                <div>
+                    <label class="text-xs font-semibold text-slate-700">Mavzu / Tadqiqot Sarlavhasi</label>
+                    <input type="text" id="artTitle" required placeholder="Masalan: Orolbo'yi hududida suv resurslarini tejash modellari" class="w-full mt-1 px-3.5 py-2 rounded-lg border border-slate-200 text-sm">
+                </div>
+                <div>
+                    <label class="text-xs font-semibold text-slate-700">Qisqacha mazmun (Abstract)</label>
+                    <textarea id="artSummary" rows="4" required placeholder="Tadqiqotingiz metodologiyasi va asosiy natijalari..." class="w-full mt-1 px-3.5 py-2 rounded-lg border border-slate-200 text-sm"></textarea>
+                </div>
+                <div>
+                    <label class="text-xs font-semibold text-slate-700">Tadqiqot fayliga havola (Google Drive / arXiv / PDF link)</label>
+                    <input type="url" id="artLink" placeholder="https://drive.google.com/..." class="w-full mt-1 px-3.5 py-2 rounded-lg border border-slate-200 text-sm">
+                </div>
+                <button type="submit" class="w-full py-2.5 bg-brand-600 hover:bg-brand-700 text-white font-bold rounded-xl text-sm">Nashrga Yuborish (+20 Ball)</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- JAVASCRIPT VA ILOVA MANTIG'I -->
+    <script>
+        // Dastlabki namunaviy ma'lumotlar (Agar xotirada bo'lmasa)
+        const initData = () => {
+            if (!localStorage.getItem('biolead_ambassadors')) {
+                const ambassadors = [
+                    { name: "Sardor Rahimov", region: "Toshkent shahri", school: "Toshkent Prezident Maktabi", contact: "@sardor_lead", projects: 4 },
+                    { name: "Abduraxmon", region: "Buxoro viloyati", school: "BioLead Asoschisi", contact: "@biolead_admin", projects: 6 },
+                    { name: "Nodira Olimova", region: "Samarqand viloyati", school: "SamDU qoshidagi litsey", contact: "@nodira_eco", projects: 3 },
+                    { name: "Javohir Ergashev", region: "Farg'ona viloyati", school: "1-IDUM", contact: "@j_ergashev", projects: 2 }
+                ];
+                localStorage.setItem('biolead_ambassadors', JSON.stringify(ambassadors));
+            }
+
+            if (!localStorage.getItem('biolead_events')) {
+                const events = [
+                    { title: "Respublika Yoshlar Eco-Debati 2026", region: "Buxoro", date: "2026-09-15", desc: "Suv resurslaridan samarali foydalanish bo'yicha mintaqaviy bahs va loyihalar taqdimoti." },
+                    { title: "Raqamli Ekologiya va Sun'iy Intellekt Vorkshopi", region: "Toshkent", date: "2026-10-05", desc: "Sun'iy yo'ldosh ma'lumotlari orqali iqlim o'zgarishini modellashtirish amaliyoti." },
+                    { title: "CleanCity Zamin Challenge", region: "Samarqand", date: "2026-10-20", desc: "Plastik chiqindilarni saralash va qayta ishlash bo'yicha maktablararo musobaqa." }
+                ];
+                localStorage.setItem('biolead_events', JSON.stringify(events));
+            }
+
+            if (!localStorage.getItem('biolead_research')) {
+                const research = [
+                    { title: "O'zbekiston qishloq xo'jaligida suv isrofi va raqamli monitoring modellari", author: "BioLead Research Group", summary: "Datchiklar va algoritmlar orqali tomchilatib sug'orish tizimlarining suv tejamkorligi bo'yicha tahliliy o'rganish.", link: "#" }
+                ];
+                localStorage.setItem('biolead_research', JSON.stringify(research));
+            }
+        };
+
+        // Sahifalar o'rtasida navigatsiya
+        function showPage(pageId) {
+            document.querySelectorAll('.page-section').forEach(el => el.classList.add('hidden'));
+            const target = document.getElementById('page-' + pageId);
+            if (target) target.classList.remove('hidden');
+
+            document.querySelectorAll('.nav-btn').forEach(btn => {
+                if (btn.getAttribute('data-target') === pageId) {
+                    btn.classList.add('bg-brand-800', 'text-white');
+                } else {
+                    btn.classList.remove('bg-brand-800', 'text-white');
+                }
+            });
+
+            // Sahifa yuklanganda ma'lumotlarni yangilash
+            if (pageId === 'ambassadors') renderAmbassadors();
+            if (pageId === 'events') renderEvents();
+            if (pageId === 'research') renderResearch();
+            if (pageId === 'dashboard') renderDashboard();
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        // Modallar
+        function openModal(id) { document.getElementById(id).classList.remove('hidden'); }
+        function closeModal(id) { document.getElementById(id).classList.add('hidden'); }
+
+        // Elchilar jadvalini render qilish
+        function renderAmbassadors() {
+            const list = JSON.parse(localStorage.getItem('biolead_ambassadors')) || [];
+            const tbody = document.getElementById('ambassadorTableBody');
+            tbody.innerHTML = list.map(item => `
+                <tr class="hover:bg-slate-50 transition">
+                    <td class="py-3.5 px-4 font-bold text-brand-800"><i class="fa-solid fa-location-dot mr-1.5 text-brand-500"></i>${item.region}</td>
+                    <td class="py-3.5 px-4 font-semibold text-slate-800">${item.name}</td>
+                    <td class="py-3.5 px-4 text-slate-500">${item.school}</td>
+                    <td class="py-3.5 px-4 text-brand-600 font-mono">${item.contact}</td>
+                    <td class="py-3.5 px-4 text-right font-bold text-slate-700">${item.projects} ta</td>
+                </tr>
+            `).join('');
+        }
+
+        // Eventlarni render qilish
+        function renderEvents() {
+            const list = JSON.parse(localStorage.getItem('biolead_events')) || [];
+            const grid = document.getElementById('eventsGrid');
+            grid.innerHTML = list.map(item => `
+                <div class="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm flex flex-col justify-between space-y-4">
+                    <div class="space-y-2">
+                        <div class="flex justify-between items-center">
+                            <span class="text-[11px] font-bold uppercase tracking-wider px-2.5 py-1 rounded-full bg-brand-50 text-brand-700 border border-brand-200">${item.region}</span>
+                            <span class="text-xs text-slate-400 font-semibold"><i class="fa-regular fa-calendar mr-1"></i>${item.date}</span>
+                        </div>
+                        <h3 class="font-bold text-slate-900 text-base">${item.title}</h3>
+                        <p class="text-xs text-slate-500 leading-relaxed">${item.desc}</p>
+                    </div>
+                    <button class="w-full py-2 bg-slate-100 hover:bg-brand-600 hover:text-white text-slate-700 text-xs font-bold rounded-xl transition">Ishtirok Etish</button>
+                </div>
+            `).join('');
+        }
+
+        // Research maqolalarni render qilish
+        function renderResearch() {
+            const list = JSON.parse(localStorage.getItem('biolead_research')) || [];
+            const container = document.getElementById('researchList');
+            container.innerHTML = list.map(item => `
+                <div class="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm space-y-3">
+                    <span class="text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 rounded bg-blue-50 text-blue-700">Ilmiy Maqola</span>
+                    <h3 class="text-base font-bold text-slate-900">${item.title}</h3>
+                    <p class="text-xs text-slate-400">Muallif: <b class="text-slate-600">${item.author}</b></p>
+                    <p class="text-xs text-slate-600 leading-relaxed">${item.summary}</p>
+                    ${item.link && item.link !== '#' ? `<a href="${item.link}" target="_blank" class="inline-flex items-center space-x-1.5 text-xs text-brand-600 font-bold hover:underline"><span>To'liq Tadqiqotni Ko'rish</span><i class="fa-solid fa-arrow-up-right-from-square"></i></a>` : ''}
+                </div>
+            `).join('');
+        }
+
+        // Autentifikatsiya holati
+        let currentUser = JSON.parse(localStorage.getItem('biolead_currentUser')) || null;
+
+        function updateAuthUI() {
+            const guestNav = document.getElementById('authNavGuest');
+            const userNav = document.getElementById('authNavUser');
+            if (currentUser) {
+                guestNav.classList.add('hidden');
+                userNav.classList.remove('hidden');
+                document.getElementById('navUserName').textContent = currentUser.name.split(' ')[0];
+            } else {
+                guestNav.classList.remove('hidden');
+                userNav.classList.add('hidden');
+            }
+        }
+
+        // Ro'yxatdan o'tish
+        document.getElementById('registerForm').addEventListener('submit', (e) => {
+            e.preventDefault();
+            const newUser = {
+                name: document.getElementById('regName').value.trim(),
+                email: document.getElementById('regEmail').value.trim(),
+                region: document.getElementById('regRegion').value.trim(),
+                role: 'user',
+                points: 0
+            };
+            localStorage.setItem('biolead_currentUser', JSON.stringify(newUser));
+            currentUser = newUser;
+            closeModal('registerModal');
+            updateAuthUI();
+            showPage('dashboard');
+        });
+
+        // Kirish
+        document.getElementById('loginForm').addEventListener('submit', (e) => {
+            e.preventDefault();
+            const user = document.getElementById('loginUser').value.trim();
+            const pass = document.getElementById('loginPass').value.trim();
+
+            if (user === 'admin' && pass === 'admin123') {
+                currentUser = { name: "Abduraxmon (Loyiha Egasi)", email: "admin@biolead.uz", role: "admin", points: 999 };
+            } else {
+                currentUser = { name: user, email: user + "@mail.com", role: "user", points: 35 };
+            }
+
+            localStorage.setItem('biolead_currentUser', JSON.stringify(currentUser));
+            closeModal('loginModal');
+            updateAuthUI();
+            showPage('dashboard');
+        });
+
+        // Chiqish
+        function logout() {
+            localStorage.removeItem('biolead_currentUser');
+            currentUser = null;
+            updateAuthUI();
+            showPage('home');
+        }
+
+        // Shaxsiy kabinetni yangilash
+        function renderDashboard() {
+            if (!currentUser) {
+                showPage('home');
+                openModal('loginModal');
+                return;
+            }
+            document.getElementById('dashName').textContent = currentUser.name;
+            document.getElementById('dashEmail').textContent = currentUser.email;
+            document.getElementById('dashAvatar').textContent = currentUser.name.charAt(0).toUpperCase();
+            document.getElementById('dashPoints').textContent = currentUser.points;
+
+            const badge = document.getElementById('dashRoleBadge');
+            const adminBlock = document.getElementById('adminPanelBlock');
+
+            if (currentUser.role === 'admin') {
+                badge.textContent = "Loyiha Egasi (Admin)";
+                badge.className = "text-xs px-2.5 py-0.5 rounded-full font-bold bg-purple-100 text-purple-700 uppercase";
+                adminBlock.classList.remove('hidden');
+            } else {
+                badge.textContent = "Ishtirokchi";
+                badge.className = "text-xs px-2.5 py-0.5 rounded-full font-bold bg-brand-100 text-brand-700 uppercase";
+                adminBlock.classList.add('hidden');
+            }
+        }
+
+        // Admin: Elchi qo'shish
+        document.getElementById('addAmbassadorForm')?.addEventListener('submit', (e) => {
+            e.preventDefault();
+            const list = JSON.parse(localStorage.getItem('biolead_ambassadors')) || [];
+            list.push({
+                name: document.getElementById('ambName').value,
+                region: document.getElementById('ambRegion').value,
+                school: document.getElementById('ambSchool').value,
+                contact: document.getElementById('ambContact').value,
+                projects: 1
+            });
+            localStorage.setItem('biolead_ambassadors', JSON.stringify(list));
+            alert("Yangi elchi muvaffaqiyatli qo'shildi!");
+            e.target.reset();
+            renderAmbassadors();
+        });
+
+        // Admin: Event qo'shish
+        document.getElementById('addEventForm')?.addEventListener('submit', (e) => {
+            e.preventDefault();
+            const list = JSON.parse(localStorage.getItem('biolead_events')) || [];
+            list.push({
+                title: document.getElementById('evTitle').value,
+                region: document.getElementById('evRegion').value,
+                date: document.getElementById('evDate').value,
+                desc: document.getElementById('evDesc').value
+            });
+            localStorage.setItem('biolead_events', JSON.stringify(list));
+            alert("Yangi tadbir e'lon qilindi!");
+            e.target.reset();
+            renderEvents();
+        });
+
+        // Shaxsiy tejash kalkulyatori
+        function calculateAndSaveImpact() {
+            const water = parseFloat(document.getElementById('calcWater').value) || 0;
+            const energy = parseFloat(document.getElementById('calcEnergy').value) || 0;
+            const waste = parseFloat(document.getElementById('calcWaste').value) || 0;
+
+            const points = (water * 0.2) + (energy * 5) + (waste * 10);
+            const co2 = ((water * 0.001) + (energy * 0.5) + (waste * 0.3)).toFixed(1);
+
+            document.getElementById('calcResultPoints').textContent = `+${Math.round(points)} Ball`;
+            document.getElementById('calcResultCO2').textContent = `${co2} kg`;
+
+            if (currentUser) {
+                currentUser.points = (currentUser.points || 0) + Math.round(points);
+                localStorage.setItem('biolead_currentUser', JSON.stringify(currentUser));
+                updateAuthUI();
+                alert(`Ajoyib! Sizning profilingizga ${Math.round(points)} ball qo'shildi!`);
+            } else {
+                alert("Ballarni profilingizda saqlash uchun avval tizimga kiring.");
+            }
+        }
+
+        // Maqola yuklash modalini ochish
+        function openArticleModal() {
+            if (!currentUser) {
+                alert("Tadqiqot yuklash uchun avval tizimga kiring!");
+                openModal('loginModal');
+                return;
+            }
+            openModal('articleModal');
+        }
+
+        // Maqola yuborish
+        document.getElementById('articleForm').addEventListener('submit', (e) => {
+            e.preventDefault();
+            const list = JSON.parse(localStorage.getItem('biolead_research')) || [];
+            list.unshift({
+                title: document.getElementById('artTitle').value,
+                author: currentUser.name,
+                summary: document.getElementById('artSummary').value,
+                link: document.getElementById('artLink').value || '#'
+            });
+            localStorage.setItem('biolead_research', JSON.stringify(list));
+            
+            // Muallifga bonus ball berish
+            currentUser.points = (currentUser.points || 0) + 20;
+            localStorage.setItem('biolead_currentUser', JSON.stringify(currentUser));
+            updateAuthUI();
+
+            closeModal('articleModal');
+            alert("Tadqiqotingiz muvaffaqiyatli yuklandi va sizga +20 ball taqdim etildi!");
+            e.target.reset();
+            renderResearch();
+        });
+
+        // Boshlang'ich yuklash
+        initData();
+        updateAuthUI();
+    </script>
+</body>
+</html>
